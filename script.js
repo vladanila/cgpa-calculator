@@ -11,17 +11,18 @@ const themeIconMoon = document.getElementById('themeIconMoon');
 const themeIconSun = document.getElementById('themeIconSun');
 
 let currentOverallCgpa = null; 
+let clearAllBtnElement = null; 
 
 // --- Theme Management ---
 function applyTheme(theme) {
     if (theme === 'dark') {
         document.documentElement.classList.add('dark');
-        themeIconMoon.classList.remove('hidden'); // Show moon
-        themeIconSun.classList.add('hidden');    // Hide sun
+        themeIconMoon.classList.remove('hidden'); 
+        themeIconSun.classList.add('hidden');    
     } else {
         document.documentElement.classList.remove('dark');
-        themeIconSun.classList.remove('hidden');  // Show sun
-        themeIconMoon.classList.add('hidden');   // Hide moon
+        themeIconSun.classList.remove('hidden');  
+        themeIconMoon.classList.add('hidden');   
     }
 }
 function initializeTheme() {
@@ -32,10 +33,10 @@ function initializeTheme() {
     } else if (systemPrefersDark) {
         applyTheme('dark');
     } else {
-        applyTheme('light'); // Default to light
+        applyTheme('light'); 
     }
 }
-initializeTheme(); // Call on page load
+initializeTheme(); 
 
 themeToggleBtn.addEventListener('click', () => {
     let newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
@@ -43,33 +44,59 @@ themeToggleBtn.addEventListener('click', () => {
     localStorage.setItem('theme', newTheme);
 });
 
-// --- Semester Card Creation ---
-function createSemesterCard(semNumber) {
-    const semId = `sem${semNumber}`;
+// --- Clear All Inputs Functionality ---
+function clearAllInputs() {
+    for (let i = 1; i <= TOTAL_SEMESTERS; i++) {
+        const semId = `sem${i}`;
+        const sgpaInput = document.getElementById(`sgpa-${semId}`);
+        const creditsInput = document.getElementById(`credits-${semId}`);
+        const includeCheckbox = document.getElementById(`include-${semId}`);
+        const card = document.getElementById(`card-${semId}`);
+
+        if (sgpaInput) sgpaInput.value = '';
+        if (creditsInput) creditsInput.value = '';
+        
+        if (includeCheckbox) {
+            includeCheckbox.checked = true; 
+            if(sgpaInput) sgpaInput.disabled = false;     
+            if(creditsInput) creditsInput.disabled = false;
+        }
+        if (card) {
+            card.classList.remove('excluded'); 
+        }
+    }
+    resultArea.innerHTML = '';
+    percentageArea.innerHTML = '';
+    convertToPercentageBtn.disabled = true;
+    currentOverallCgpa = null;
+}
+
+
+// --- Semester Card Creation & Dynamic Button Insertion ---
+for (let i = 1; i <= TOTAL_SEMESTERS; i++) {
+    const semId = `sem${i}`;
     const card = document.createElement('div');
-    // Add Tailwind classes directly here or ensure they are in style.css if this element is complex
-    card.className = 'semester-card'; // Ensure this class matches your CSS
+    card.className = 'semester-card'; 
     card.id = `card-${semId}`;
 
-    // Using Tailwind classes directly in the JS-generated HTML
     card.innerHTML = `
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-semibold">Semester ${semNumber}</h2>
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-lg">Semester ${i}</h2> 
             <div class="flex items-center">
-                <span class="text-sm mr-2.5">Include:</span>
+                <span class="text-sm mr-3">Include:</span>
                 <label class="toggle-switch">
                     <input type="checkbox" id="include-${semId}" checked>
                     <span class="slider"></span>
                 </label>
             </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-5">
             <div>
-                <label for="sgpa-${semId}" class="block text-sm font-medium mb-1.5">SGPA/GPA:</label>
+                <label for="sgpa-${semId}" class="block text-sm font-medium mb-2">SGPA/GPA:</label>
                 <input type="number" id="sgpa-${semId}" name="sgpa-${semId}" placeholder="e.g., 8.5" step="0.01" min="0" max="10" class="w-full">
             </div>
             <div>
-                <label for="credits-${semId}" class="block text-sm font-medium mb-1.5">Credits:</label>
+                <label for="credits-${semId}" class="block text-sm font-medium mb-2">Credits:</label>
                 <input type="number" id="credits-${semId}" name="credits-${semId}" placeholder="e.g., 24" step="1" min="0" class="w-full">
             </div>
         </div>`;
@@ -83,23 +110,39 @@ function createSemesterCard(semNumber) {
         percentageArea.innerHTML = '';
         convertToPercentageBtn.disabled = true;
         currentOverallCgpa = null;
+        if (resultArea.querySelector('.result-box')) { 
+            resultArea.innerHTML = '';
+        }
     };
 
     includeCheckbox.addEventListener('change', () => {
         const isIncluded = includeCheckbox.checked;
         sgpaInput.disabled = !isIncluded;
         creditsInput.disabled = !isIncluded;
+        if (!isIncluded) { 
+            sgpaInput.value = '';
+            creditsInput.value = '';
+        }
         card.classList.toggle('excluded', !isIncluded);
         resetDependentFields();
     });
     [sgpaInput, creditsInput].forEach(input => {
         input.addEventListener('input', resetDependentFields);
     });
+} // End of semester card creation loop
+
+// Now, create and append the Clear All button AFTER all semester cards
+clearAllBtnElement = document.createElement('button');
+clearAllBtnElement.id = 'clearAllBtn';
+// Add a new class for specific styling if general .tertiary-btn isn't enough
+clearAllBtnElement.className = 'action-btn tertiary-btn clear-all-dynamic-btn'; 
+clearAllBtnElement.textContent = 'Clear All Inputs';
+semestersContainer.appendChild(clearAllBtnElement); // Append to the grid container
+
+if(clearAllBtnElement) { 
+    clearAllBtnElement.addEventListener('click', clearAllInputs);
 }
-// Generate semester cards on page load
-for (let i = 1; i <= TOTAL_SEMESTERS; i++) {
-    createSemesterCard(i);
-}
+
 
 // --- CGPA Calculation ---
 calculateCgpaBtn.addEventListener('click', () => {
@@ -128,14 +171,10 @@ calculateCgpaBtn.addEventListener('click', () => {
                 displayError(`Invalid Credits for Semester ${i}. Must be non-negative.`);
                 creditsInput.focus(); hasError = true; break;
             }
-            // If SGPA is entered and is > 0, credits must also be > 0.
-            // Allows (SGPA=0, Credits=0) or (SGPA=0, Credits=positive_value)
             if (sgpa > 0 && credits <= 0) { 
                 displayError(`Credits for Semester ${i} must be positive if SGPA > 0.`);
                 creditsInput.focus(); hasError = true; break;
             }
-            
-            // Only add to totals if credits are positive. SGPA can be 0.
             if (credits > 0) {
                 totalWeightedSgpa += sgpa * credits;
                 totalCredits += credits;
@@ -154,17 +193,16 @@ calculateCgpaBtn.addEventListener('click', () => {
                 anyIncluded = true;
                 const sgpaInput = document.getElementById(`sgpa-sem${i}`);
                 const creditsInput = document.getElementById(`credits-sem${i}`);
-                if (sgpaInput.value && creditsInput.value) { // Check if both fields have some value
+                if (sgpaInput.value && creditsInput.value) {
                     includedAndFilled++;
                 }
             }
         }
-
         if (anyIncluded && includedAndFilled === 0) {
              displayError("Please enter SGPA and Credits for included semesters.");
         } else if (!anyIncluded) {
              displayError("Please include at least one semester.");
-        } else { // Included semesters are present, but total credits sum to 0 (e.g., all included sems have 0 credits)
+        } else { 
              displayResult("Overall CGPA is: 0.00 (Total credits are zero)");
              currentOverallCgpa = 0.00; 
              convertToPercentageBtn.disabled = false; 
@@ -174,7 +212,7 @@ calculateCgpaBtn.addEventListener('click', () => {
 
     const overallCgpa = totalWeightedSgpa / totalCredits;
     displayResult(`Your Overall CGPA is: ${overallCgpa.toFixed(2)}`);
-    currentOverallCgpa = overallCgpa; // Store the actual numeric value
+    currentOverallCgpa = overallCgpa; 
     convertToPercentageBtn.disabled = false; 
 });
 
@@ -184,7 +222,6 @@ convertToPercentageBtn.addEventListener('click', () => {
         percentageArea.innerHTML = `<div class="error-box">Please calculate CGPA first.</div>`;
         return;
     }
-    // Ensure currentOverallCgpa is treated as a number for calculation
     const numericCgpa = parseFloat(currentOverallCgpa);
     if (isNaN(numericCgpa)) {
          percentageArea.innerHTML = `<div class="error-box">Invalid CGPA value for percentage conversion.</div>`;
