@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator - Modern Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> </head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
+
+    <div class="main-container w-full max-w-2xl p-6 sm:p-8">
+        <div class="absolute top-5 right-5 sm:top-6 sm:right-6">
+            <button id="themeToggleBtn" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+                <svg id="themeIconMoon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+                <svg id="themeIconSun" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" viewBox="0 0 20 20" fill="currentColor">
+                     <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.243 1.757a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM17.5 10a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm-1.586 3.536a1 1 0 010 1.414l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 0zm-6.173 1.121a1 1 0 011-1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM2.5 10a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm1.586-3.536a1 1 0 010-1.414l.707-.707A1 1 0 016.207 4.343l-.707.707a1 1 0 01-1.414 0zM10 5a5 5 0 100 10 5 5 0 000-10z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold" style="color: var(--text-primary);">CGPA Calculator</h1>
+            <p class="mt-2 text-base sm:text-lg" style="color: var(--text-secondary);">Enter SGPA & Credits to find your CGPA and Percentage.</p>
+        </header>
+
+        <div id="semestersContainer" class="space-y-5">
+            </div>
+
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <button id="calculateCgpaBtn" 
+                    class="w-full action-btn calculate-btn">
+                Calculate My CGPA
+            </button>
+            <button id="convertToPercentageBtn" 
+                    class="w-full action-btn percentage-convert-btn"
+                    disabled>
+                Convert to Percentage
+            </button>
+        </div>
+
+        <div id="resultArea" class="mt-8 text-center" style="min-height: 60px;">
+            </div>
+        <div id="percentageArea" class="mt-5" style="min-height: 40px;">
+            </div>
+    </div>
+
+    <footer class="text-center mt-10 mb-6 text-sm" style="color: var(--text-tertiary);">
+        <p>CGPA Formula: &Sigma;(SGPA<sub>i</sub> &times; Credits<sub>i</sub>) / &Sigma;(Credits<sub>i</sub>). Percentage = CGPA &times; 9.5</p>
+    </footer>
+
+    <script src="script.js"></script> </body>
+</html>
