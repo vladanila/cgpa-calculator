@@ -1,105 +1,85 @@
 /* style.css */
 :root {
-    /* New Accent Color */
-    --accent-color-primary: #ff0436; /* User requested color */
-    --accent-color-primary-hover: #e0002b; /* A slightly darker shade for hover */
+    /* Accent Color */
+    --accent-color-primary: #ff0436; 
+    --accent-color-primary-hover: #e0002b; 
 
-    /* Light Theme - Apple Inspired with new accent */
+    /* Light Theme */
     --bg-color-light: #f5f5f7; 
     --card-bg-light: #ffffff;
     --main-container-bg-light: #ffffff;
     --text-primary-light: #1d1d1f; 
     --text-secondary-light: #6e6e73; 
     --text-tertiary-light: #86868b; 
-    
     --input-border-light: #d2d2d7; 
     --input-bg-light: #ffffff;
     --input-text-light: var(--text-primary-light);
     --input-placeholder-light: #aeaeb2; 
     --input-disabled-bg-light: #f0f0f0;
     --input-focus-ring-light: rgba(255, 4, 54, 0.3); 
-    
     --btn-primary-bg-light: var(--accent-color-primary);
     --btn-primary-hover-bg-light: var(--accent-color-primary-hover);
     --btn-primary-text-light: #ffffff;
-    
     --btn-secondary-bg-light: #e5e5ea; 
     --btn-secondary-hover-bg-light: #dcdce0; 
     --btn-secondary-text-light: var(--text-primary-light);
-
     --btn-tertiary-bg-light: #f2f2f7; 
     --btn-tertiary-hover-bg-light: #e5e5ea;
     --btn-tertiary-text-light: var(--text-secondary-light); 
-
     --excluded-card-opacity-light: 0.65;
     --excluded-card-bg-light: #f9f9f9;
-    
     --result-bg-light: #fff0f2; 
     --result-border-light: var(--accent-color-primary);
     --result-text-light: var(--accent-color-primary);
-    
     --percentage-bg-light: #f0fff0; 
     --percentage-border-light: #34c759; 
     --percentage-text-light: #28a745; 
-    
     --error-bg-light: #fff0f0; 
     --error-border-light: #ff3b30; 
     --error-text-light: #d92c2c;
-    
     --toggle-slider-bg-light: #e9e9eb;
     --toggle-slider-checked-bg-light: var(--accent-color-primary); 
     --toggle-slider-knob-bg-light: #ffffff;
-    
     --shadow-color-light: rgba(0, 0, 0, 0.08); 
     --theme-toggle-icon-color-light: var(--text-secondary-light);
     --theme-toggle-hover-bg-light: #e9e9ea;
 
-    /* Dark Theme - Apple Inspired with new accent */
+    /* Dark Theme */
     --bg-color-dark: #1c1c1e; 
     --card-bg-dark: #2c2c2e; 
     --main-container-bg-dark: #2c2c2e;
     --text-primary-dark: #ffffff;
     --text-secondary-dark: #8e8e93; 
     --text-tertiary-dark: #636366;
-
     --input-border-dark: #48484a;
     --input-bg-dark: #3a3a3c;
     --input-text-dark: var(--text-primary-dark);
     --input-placeholder-dark: #7c7c80;
     --input-disabled-bg-dark: #333335;
     --input-focus-ring-dark: rgba(255, 4, 54, 0.4); 
-    
     --btn-primary-bg-dark: var(--accent-color-primary);
     --btn-primary-hover-bg-dark: var(--accent-color-primary-hover);
     --btn-primary-text-dark: #ffffff;
-    
     --btn-secondary-bg-dark: #3a3a3c; 
     --btn-secondary-hover-bg-dark: #48484a;
     --btn-secondary-text-dark: var(--text-primary-dark);
-
     --btn-tertiary-bg-dark: #2c2c2e; 
     --btn-tertiary-hover-bg-dark: #3a3a3c;
     --btn-tertiary-text-dark: var(--text-secondary-dark);
-
     --excluded-card-opacity-dark: 0.65;
     --excluded-card-bg-dark: #232325;
-
     --result-bg-dark: #4d1f2a; 
     --result-border-dark: var(--accent-color-primary);
     --result-text-dark: var(--accent-color-primary);
-
     --percentage-bg-dark: #1c4b2b; 
     --percentage-border-dark: #30d158; 
     --percentage-text-dark: #2fbc51;
-
     --error-bg-dark: #5e1c1c; 
     --error-border-dark: #ff453a; 
     --error-text-dark: #ff3b30;
-
     --toggle-slider-bg-dark: #545458;
     --toggle-slider-checked-bg-dark: var(--accent-color-primary); 
     --toggle-slider-knob-bg-dark: #ffffff;
-
     --shadow-color-dark: rgba(0, 0, 0, 0.25); 
     --theme-toggle-icon-color-dark: var(--text-secondary-dark);
     --theme-toggle-hover-bg-dark: #3a3a3c;
@@ -144,6 +124,12 @@ input[type="number"]:disabled {
     background-color: var(--input-disabled-bg-light); 
     opacity: 0.7;
 }
+/* Visual Validation Error Style */
+input[type="number"].input-error {
+    border-color: var(--error-border-light) !important; /* Use error color from theme */
+    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.2) !important; /* Softer red ring for error */
+}
+
 
 .output-area .result-box {
     background-color: var(--result-bg-light); 
@@ -180,7 +166,7 @@ input[type="number"]:disabled {
 }
 .action-btn.secondary-btn:hover:not(:disabled) { background-color: var(--btn-secondary-hover-bg-light); }
 
-.action-btn.tertiary-btn { /* This will style the dynamically added button */
+.action-btn.tertiary-btn {
     background-color: var(--btn-tertiary-bg-light);
     color: var(--btn-tertiary-text-light);
 }
@@ -226,6 +212,12 @@ html.dark input[type="number"]:focus {
 html.dark input[type="number"]:disabled { 
     background-color: var(--input-disabled-bg-dark); 
 }
+/* Visual Validation Error Style for Dark Mode */
+html.dark input[type="number"].input-error {
+    border-color: var(--error-border-dark) !important; 
+    box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.3) !important;
+}
+
 
 html.dark .output-area .result-box {
     background-color: var(--result-bg-dark); 
@@ -315,11 +307,21 @@ body {
     letter-spacing: -0.005em;
 }
 
+/* Semester Controls */
+.semester-controls {
+    /* Using flex classes from Tailwind in HTML */
+}
+.action-btn.small-btn {
+    padding: 0.5rem 1rem; /* Smaller padding */
+    font-size: 0.875rem; /* Smaller font size */
+}
+
+
 /* Semester Grid Layout */
 .semesters-grid {
     display: grid;
     gap: 1.25rem; 
-    align-items: start; /* Align items to the start of their track */
+    align-items: start; 
 }
 
 /* Default to 1 column for smaller screens */
@@ -447,41 +449,4 @@ html.dark .action-btn:active:not(:disabled) {
 
 .app-footer p {
     letter-spacing: -0.005em;
-}
-
-/* Styles for the dynamically inserted Clear All button */
-.clear-all-dynamic-btn {
-    padding: 0.625rem 1.25rem !important; /* Ensure smaller padding, !important if needed */
-    font-size: 0.875rem !important;     /* Smaller font */
-    width: fit-content !important;      /* Make it only as wide as its content + padding */
-    margin-top: 0.5rem; /* Add some top margin */
-}
-
-/* On 1-column layout, center it */
-@media (max-width: 767.98px) {
-    .semesters-grid > .clear-all-dynamic-btn { 
-        justify-self: center;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-/* On 2-column layout, it will be on a new line, first column */
-@media (min-width: 768px) and (max-width: 1279.98px) {
-    .semesters-grid > .clear-all-dynamic-btn {
-        grid-column: 1 / span 2; /* Span both columns to center it */
-        justify-self: center; 
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-/* On 3-column layout, it will be in the 3rd column, same row as Sem 7 and Sem 8 */
-@media (min-width: 1280px) {
-    .semesters-grid > .clear-all-dynamic-btn {
-        justify-self: end; /* Align to the end (right) of its grid cell (3rd column) */
-        align-self: end;  /* Vertically align it to the bottom of the row with Sem 8 */
-        margin-top: 0; 
-        margin-right: 0; /* Align with the right edge of the grid area for the 3rd column */
-    }
 }
