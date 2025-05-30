@@ -1,250 +1,487 @@
 /* style.css */
 :root {
-    --bg-color: #f7f8fc; /* Softer light background */
-    --card-bg: #ffffff;
-    --main-container-bg: #ffffff;
-    --text-primary: #1a202c; /* Darker gray for primary text */
-    --text-secondary: #4a5568; /* Medium gray for secondary text */
-    --text-tertiary: #718096; /* Lighter gray for tertiary text */
-    
-    --input-border: #e2e8f0; /* Lighter input border */
-    --input-bg: #ffffff;
-    --input-text: #2d3748; /* Darker input text */
-    --input-placeholder: #a0aec0; /* Softer placeholder */
-    --input-disabled-bg: #edf2f7;
-    --input-focus-border: #4299e1; /* Tailwind blue-500 */
-    --input-focus-shadow: rgba(66, 153, 225, 0.5); /* Softer focus shadow */
+    /* New Accent Color */
+    --accent-color-primary: #ff0436; /* User requested color */
+    --accent-color-primary-hover: #e0002b; /* A slightly darker shade for hover */
 
-    --btn-primary-bg: #3182ce; /* Tailwind blue-600 */
-    --btn-primary-hover-bg: #2b6cb0; /* Tailwind blue-700 */
-    --btn-primary-text: #ffffff;
+    /* Light Theme - Apple Inspired with new accent */
+    --bg-color-light: #f5f5f7; 
+    --card-bg-light: #ffffff;
+    --main-container-bg-light: #ffffff;
+    --text-primary-light: #1d1d1f; 
+    --text-secondary-light: #6e6e73; 
+    --text-tertiary-light: #86868b; 
     
-    --btn-secondary-bg: #38a169; /* Tailwind green-600 */
-    --btn-secondary-hover-bg: #2f855a; /* Tailwind green-700 */
-    --btn-secondary-text: #ffffff;
+    --input-border-light: #d2d2d7; 
+    --input-bg-light: #ffffff;
+    --input-text-light: var(--text-primary-light);
+    --input-placeholder-light: #aeaeb2; 
+    --input-disabled-bg-light: #f0f0f0;
+    --input-focus-ring-light: rgba(255, 4, 54, 0.3); 
+    
+    --btn-primary-bg-light: var(--accent-color-primary);
+    --btn-primary-hover-bg-light: var(--accent-color-primary-hover);
+    --btn-primary-text-light: #ffffff;
+    
+    --btn-secondary-bg-light: #e5e5ea; 
+    --btn-secondary-hover-bg-light: #dcdce0; 
+    --btn-secondary-text-light: var(--text-primary-light);
 
-    --excluded-card-opacity: 0.7;
-    --excluded-card-bg: #f1f5f9; /* Lighter gray for excluded */
+    --btn-tertiary-bg-light: #f2f2f7; 
+    --btn-tertiary-hover-bg-light: #e5e5ea;
+    --btn-tertiary-text-light: var(--text-secondary-light); 
+
+    --excluded-card-opacity-light: 0.65;
+    --excluded-card-bg-light: #f9f9f9;
     
-    --result-bg: #ebf8ff; /* Tailwind blue-100 */
-    --result-border: #90cdf4; /* Tailwind blue-300 */
-    --result-text: #2c5282; /* Tailwind blue-800 */
+    --result-bg-light: #fff0f2; 
+    --result-border-light: var(--accent-color-primary);
+    --result-text-light: var(--accent-color-primary);
     
-    --percentage-bg: #f0fff4; /* Tailwind green-50 */
-    --percentage-border: #9ae6b4; /* Tailwind green-300 */
-    --percentage-text: #276749; /* Tailwind green-800 */
+    --percentage-bg-light: #f0fff0; 
+    --percentage-border-light: #34c759; 
+    --percentage-text-light: #28a745; 
     
-    --error-bg: #fff5f5; /* Tailwind red-50 */
-    --error-border: #feb2b2; /* Tailwind red-300 */
-    --error-text: #c53030; /* Tailwind red-700 */
+    --error-bg-light: #fff0f0; 
+    --error-border-light: #ff3b30; 
+    --error-text-light: #d92c2c;
     
-    --toggle-slider-bg: #cbd5e0; /* Softer toggle bg */
-    --toggle-slider-checked-bg: var(--btn-primary-bg);
-    --toggle-slider-knob-bg: #ffffff;
+    --toggle-slider-bg-light: #e9e9eb;
+    --toggle-slider-checked-bg-light: var(--accent-color-primary); 
+    --toggle-slider-knob-bg-light: #ffffff;
     
-    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer, more diffused shadow */
-    --theme-toggle-hover-bg: #edf2f7; /* Lighter hover for theme toggle */
-    --theme-toggle-icon-color: #4a5568;
+    --shadow-color-light: rgba(0, 0, 0, 0.08); 
+    --theme-toggle-icon-color-light: var(--text-secondary-light);
+    --theme-toggle-hover-bg-light: #e9e9ea;
+
+    /* Dark Theme - Apple Inspired with new accent */
+    --bg-color-dark: #1c1c1e; 
+    --card-bg-dark: #2c2c2e; 
+    --main-container-bg-dark: #2c2c2e;
+    --text-primary-dark: #ffffff;
+    --text-secondary-dark: #8e8e93; 
+    --text-tertiary-dark: #636366;
+
+    --input-border-dark: #48484a;
+    --input-bg-dark: #3a3a3c;
+    --input-text-dark: var(--text-primary-dark);
+    --input-placeholder-dark: #7c7c80;
+    --input-disabled-bg-dark: #333335;
+    --input-focus-ring-dark: rgba(255, 4, 54, 0.4); 
+    
+    --btn-primary-bg-dark: var(--accent-color-primary);
+    --btn-primary-hover-bg-dark: var(--accent-color-primary-hover);
+    --btn-primary-text-dark: #ffffff;
+    
+    --btn-secondary-bg-dark: #3a3a3c; 
+    --btn-secondary-hover-bg-dark: #48484a;
+    --btn-secondary-text-dark: var(--text-primary-dark);
+
+    --btn-tertiary-bg-dark: #2c2c2e; 
+    --btn-tertiary-hover-bg-dark: #3a3a3c;
+    --btn-tertiary-text-dark: var(--text-secondary-dark);
+
+    --excluded-card-opacity-dark: 0.65;
+    --excluded-card-bg-dark: #232325;
+
+    --result-bg-dark: #4d1f2a; 
+    --result-border-dark: var(--accent-color-primary);
+    --result-text-dark: var(--accent-color-primary);
+
+    --percentage-bg-dark: #1c4b2b; 
+    --percentage-border-dark: #30d158; 
+    --percentage-text-dark: #2fbc51;
+
+    --error-bg-dark: #5e1c1c; 
+    --error-border-dark: #ff453a; 
+    --error-text-dark: #ff3b30;
+
+    --toggle-slider-bg-dark: #545458;
+    --toggle-slider-checked-bg-dark: var(--accent-color-primary); 
+    --toggle-slider-knob-bg-dark: #ffffff;
+
+    --shadow-color-dark: rgba(0, 0, 0, 0.25); 
+    --theme-toggle-icon-color-dark: var(--text-secondary-dark);
+    --theme-toggle-hover-bg-dark: #3a3a3c;
 }
 
-html.dark {
-    --bg-color: #1a202c; /* Dark gray-900 */
-    --card-bg: #2d3748; /* Dark gray-800 */
-    --main-container-bg: #2d3748;
-    --text-primary: #f7fafc; /* Almost white */
-    --text-secondary: #a0aec0; /* Light gray-400 */
-    --text-tertiary: #718096; /* Light gray-500 */
-    
-    --input-border: #4a5568; /* gray-600 */
-    --input-bg: #1a202c; /* gray-900 */
-    --input-text: #e2e8f0; /* gray-200 */
-    --input-placeholder: #718096; /* gray-500 */
-    --input-disabled-bg: #2d3748; /* gray-800, slightly different from card */
-    --input-focus-border: #63b3ed; /* Tailwind blue-400 */
-    --input-focus-shadow: rgba(99, 179, 237, 0.5);
-
-    --btn-primary-bg: #4299e1; /* Tailwind blue-500 */
-    --btn-primary-hover-bg: #3182ce; /* Tailwind blue-600 */
-    
-    --btn-secondary-bg: #48bb78; /* Tailwind green-500 */
-    --btn-secondary-hover-bg: #38a169; /* Tailwind green-600 */
-
-    --excluded-card-bg: #4a5568; /* gray-700, more distinct */
-    
-    --result-bg: #2c5282; /* Tailwind blue-800 */
-    --result-border: #4299e1; /* Tailwind blue-500 */
-    --result-text: #bee3f8; /* Tailwind blue-200 */
-    
-    --percentage-bg: #2f855a; /* Tailwind green-700 */
-    --percentage-border: #48bb78; /* Tailwind green-500 */
-    --percentage-text: #c6f6d5; /* Tailwind green-200 */
-    
-    --error-bg: #c53030; /* Tailwind red-700 */
-    --error-border: #fc8181; /* Tailwind red-400 */
-    --error-text: #fed7d7; /* Tailwind red-200 */
-    
-    --toggle-slider-bg: #4a5568; /* gray-600 */
-    --toggle-slider-checked-bg: var(--btn-primary-bg);
-    
-    --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for dark mode */
-    --theme-toggle-hover-bg: #4a5568; /* Darker hover for theme toggle */
-    --theme-toggle-icon-color: #a0aec0;
-}
-
+/* Apply light theme by default */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-color-light);
+    color: var(--text-primary-light);
 }
-
-/* Tailwind utility classes will still apply from the CDN. 
-   These are custom styles or overrides. */
-
 .main-container {
-    background-color: var(--main-container-bg);
-    transition: background-color 0.3s ease;
-    /* position: relative; Tailwind class 'relative' is used in HTML */
-    /* border-radius: 1rem; Tailwind class 'rounded-2xl' could be used or keep as is */
-    box-shadow: var(--card-shadow);
+    background-color: var(--main-container-bg-light);
+    box-shadow: 0 8px 32px var(--shadow-color-light);
 }
+.app-header h1 { color: var(--text-primary-light); }
+.app-header p { color: var(--text-secondary-light); }
+.app-footer { color: var(--text-tertiary-light); }
+.app-footer strong { color: var(--text-secondary-light); }
 
 .semester-card {
-    background-color: var(--card-bg);
-    border-radius: 0.75rem; /* 12px */
-    padding: 1.5rem; 
-    /* margin-bottom: 1.25rem; Tailwind class 'mb-5' is used via space-y on parent */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06); /* Subtle inner card shadow */
-    transition: opacity 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
-}
-html.dark .semester-card {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    background-color: var(--card-bg-light);
+    box-shadow: 0 4px 12px var(--shadow-color-light);
 }
 .semester-card.excluded {
-    opacity: var(--excluded-card-opacity);
-    background-color: var(--excluded-card-bg);
+    opacity: var(--excluded-card-opacity-light);
+    background-color: var(--excluded-card-bg-light);
 }
-.semester-card h2 { 
-    color: var(--text-primary); 
-    /* font-weight: 600; Tailwind 'font-semibold' can be used */
-}
-.semester-card label, .semester-card span { color: var(--text-secondary); }
+.semester-card h2 { color: var(--text-primary-light); }
+.semester-card label, .semester-card span { color: var(--text-secondary-light); }
 
-.semester-card input[type="number"] {
-    border: 1px solid var(--input-border); 
-    background-color: var(--input-bg);
-    color: var(--input-text); 
-    border-radius: 0.5rem; /* 8px */
-    padding: 0.625rem 0.875rem; /* 10px 14px */
-    /* width: 100%; Tailwind 'w-full' can be used */
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+input[type="number"] {
+    border: 1px solid var(--input-border-light); 
+    background-color: var(--input-bg-light);
+    color: var(--input-text-light); 
 }
-.semester-card input[type="number"]::placeholder { color: var(--input-placeholder); opacity: 1; }
-.semester-card input[type="number"]:focus {
-    border-color: var(--input-focus-border);
-    box-shadow: 0 0 0 3px var(--input-focus-shadow); 
-    outline: none;
+input[type="number"]::placeholder { color: var(--input-placeholder-light); }
+input[type="number"]:focus {
+    border-color: var(--accent-color-primary); 
+    box-shadow: 0 0 0 3px var(--input-focus-ring-light); 
 }
-.semester-card input[type="number"]:disabled { 
-    background-color: var(--input-disabled-bg); 
-    cursor: not-allowed; 
+input[type="number"]:disabled { 
+    background-color: var(--input-disabled-bg-light); 
     opacity: 0.7;
 }
 
-.result-box, .percentage-box, .error-box {
-    padding: 1rem 1.25rem; 
-    border-radius: 0.75rem; /* 12px */
-    /* text-align: center; Tailwind 'text-center' is used */
+.output-area .result-box {
+    background-color: var(--result-bg-light); 
+    border: 1px solid var(--result-border-light);
+    color: var(--result-text-light); 
+}
+.output-area .percentage-box {
+    background-color: var(--percentage-bg-light); 
+    border: 1px solid var(--percentage-border-light);
+    color: var(--percentage-text-light); 
+}
+.output-area .error-box {
+    background-color: var(--error-bg-light); 
+    border: 1px solid var(--error-border-light);
+    color: var(--error-text-light);
+}
+
+.toggle-switch .slider { background-color: var(--toggle-slider-bg-light); }
+.toggle-switch .slider:before { background-color: var(--toggle-slider-knob-bg-light); }
+.toggle-switch input:checked + .slider { background-color: var(--toggle-slider-checked-bg-light); }
+
+#themeToggleBtn { color: var(--theme-toggle-icon-color-light); }
+#themeToggleBtn:hover { background-color: var(--theme-toggle-hover-bg-light); }
+
+.action-btn.primary-btn {
+    background-color: var(--btn-primary-bg-light);
+    color: var(--btn-primary-text-light);
+}
+.action-btn.primary-btn:hover:not(:disabled) { background-color: var(--btn-primary-hover-bg-light); }
+
+.action-btn.secondary-btn {
+    background-color: var(--btn-secondary-bg-light);
+    color: var(--btn-secondary-text-light);
+}
+.action-btn.secondary-btn:hover:not(:disabled) { background-color: var(--btn-secondary-hover-bg-light); }
+
+.action-btn.tertiary-btn { /* This will style the dynamically added button */
+    background-color: var(--btn-tertiary-bg-light);
+    color: var(--btn-tertiary-text-light);
+}
+.action-btn.tertiary-btn:hover:not(:disabled) { background-color: var(--btn-tertiary-hover-bg-light); }
+
+
+/* Dark Theme Styles */
+html.dark body {
+    background-color: var(--bg-color-dark);
+    color: var(--text-primary-dark);
+}
+html.dark .main-container {
+    background-color: var(--main-container-bg-dark);
+    box-shadow: 0 8px 32px var(--shadow-color-dark);
+}
+html.dark .app-header h1 { color: var(--text-primary-dark); }
+html.dark .app-header p { color: var(--text-secondary-dark); }
+html.dark .app-footer { color: var(--text-tertiary-dark); }
+html.dark .app-footer strong { color: var(--text-secondary-dark); }
+
+
+html.dark .semester-card {
+    background-color: var(--card-bg-dark);
+    box-shadow: 0 4px 12px var(--shadow-color-dark);
+}
+html.dark .semester-card.excluded {
+    opacity: var(--excluded-card-opacity-dark);
+    background-color: var(--excluded-card-bg-dark);
+}
+html.dark .semester-card h2 { color: var(--text-primary-dark); }
+html.dark .semester-card label, html.dark .semester-card span { color: var(--text-secondary-dark); }
+
+html.dark input[type="number"] {
+    border: 1px solid var(--input-border-dark); 
+    background-color: var(--input-bg-dark);
+    color: var(--input-text-dark); 
+}
+html.dark input[type="number"]::placeholder { color: var(--input-placeholder-dark); }
+html.dark input[type="number"]:focus {
+    border-color: var(--accent-color-primary); 
+    box-shadow: 0 0 0 3px var(--input-focus-ring-dark); 
+}
+html.dark input[type="number"]:disabled { 
+    background-color: var(--input-disabled-bg-dark); 
+}
+
+html.dark .output-area .result-box {
+    background-color: var(--result-bg-dark); 
+    border: 1px solid var(--result-border-dark);
+    color: var(--result-text-dark); 
+}
+html.dark .output-area .percentage-box {
+    background-color: var(--percentage-bg-dark); 
+    border: 1px solid var(--percentage-border-dark);
+    color: var(--percentage-text-dark); 
+}
+html.dark .output-area .error-box {
+    background-color: var(--error-bg-dark); 
+    border: 1px solid var(--error-border-dark);
+    color: var(--error-text-dark);
+}
+
+html.dark .toggle-switch .slider { background-color: var(--toggle-slider-bg-dark); }
+html.dark .toggle-switch .slider:before { background-color: var(--toggle-slider-knob-bg-dark); }
+html.dark .toggle-switch input:checked + .slider { background-color: var(--toggle-slider-checked-bg-dark); }
+
+html.dark #themeToggleBtn { color: var(--theme-toggle-icon-color-dark); }
+html.dark #themeToggleBtn:hover { background-color: var(--theme-toggle-hover-bg-dark); }
+
+html.dark .action-btn.primary-btn {
+    background-color: var(--btn-primary-bg-dark);
+    color: var(--btn-primary-text-dark);
+}
+html.dark .action-btn.primary-btn:hover:not(:disabled) { background-color: var(--btn-primary-hover-bg-dark); }
+
+html.dark .action-btn.secondary-btn {
+    background-color: var(--btn-secondary-bg-dark);
+    color: var(--btn-secondary-text-dark);
+}
+html.dark .action-btn.secondary-btn:hover:not(:disabled) { background-color: var(--btn-secondary-hover-bg-dark); }
+
+html.dark .action-btn.tertiary-btn {
+    background-color: var(--btn-tertiary-bg-dark);
+    color: var(--btn-tertiary-text-dark);
+}
+html.dark .action-btn.tertiary-btn:hover:not(:disabled) { background-color: var(--btn-tertiary-hover-bg-dark); }
+
+
+/* General Styles - Apple Inspired */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
+
+.main-container {
+    border-radius: 18px; 
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-toggle-container {
+    position: absolute;
+    top: 1.25rem; 
+    right: 1.25rem; 
+    z-index: 10;
+}
+
+#themeToggleBtn {
+    padding: 0.5rem; 
+    border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+#themeToggleBtn .icon {
+    width: 1.25rem; 
+    height: 1.25rem; 
+}
+
+
+.app-header h1 {
+    font-weight: 600; 
+    letter-spacing: -0.01em; 
+}
+.app-header p {
+    letter-spacing: -0.005em;
+}
+
+/* Semester Grid Layout */
+.semesters-grid {
+    display: grid;
+    gap: 1.25rem; 
+    align-items: start; /* Align items to the start of their track */
+}
+
+/* Default to 1 column for smaller screens */
+.semesters-grid {
+    grid-template-columns: 1fr;
+}
+
+/* 2 columns for medium screens */
+@media (min-width: 768px) { 
+    .semesters-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+/* 3 columns for large screens */
+@media (min-width: 1280px) { 
+    .semesters-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+    }
+}
+
+
+.semester-card {
+    border-radius: 12px; 
+    padding: 1.5rem; 
+    transition: opacity 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+}
+.semester-card h2 { 
     font-weight: 500; 
-    /* margin-top: 1.25rem; Tailwind 'mt-5' is used */
+    font-size: 1.125rem; 
+}
+.semester-card label {
+    font-size: 0.875rem; 
+    font-weight: 400;
+}
+.semester-card span { 
+    font-size: 0.875rem; 
+}
+
+
+input[type="number"] {
+    border-radius: 8px; 
+    padding: 0.75rem 1rem; 
+    font-size: 1rem; 
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+    width: 100%; 
+}
+/* Hide spinners from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+input[type="number"]:disabled { 
+    cursor: not-allowed; 
+}
+
+.output-area > div { 
+    padding: 0.875rem 1.25rem; 
+    border-radius: 10px; 
+    font-weight: 500; 
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
-.result-box {
-    background-color: var(--result-bg); border: 1px solid var(--result-border);
-    color: var(--result-text); font-size: 1.25rem; font-weight: 600;
-}
- .percentage-box {
-    background-color: var(--percentage-bg); border: 1px solid var(--percentage-border);
-    color: var(--percentage-text); font-size: 1.1rem; font-weight: 600;
-}
-.error-box {
-    background-color: var(--error-bg); border: 1px solid var(--error-border);
-    color: var(--error-text);
-}
+.output-area .result-box { font-size: 1.125rem; font-weight: 500; }
+.output-area .percentage-box { font-size: 1rem; font-weight: 500; }
+.output-area .error-box { font-size: 0.9375rem; font-weight: 500;} 
   
 .toggle-switch { 
     position: relative; 
     display: inline-block; 
-    width: 44px; 
-    height: 24px; 
+    width: 48px; 
+    height: 28px; 
 }
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute; 
-    cursor: pointer; 
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--toggle-slider-bg); 
-    transition: .4s; 
-    border-radius: 24px;
+.toggle-switch .slider {
+    border-radius: 28px;
 }
-.slider:before {
-    position: absolute; 
-    content: ""; 
-    height: 18px; width: 18px;
+.toggle-switch .slider:before {
+    height: 22px; width: 22px;
     left: 3px; bottom: 3px;
-    background-color: var(--toggle-slider-knob-bg);
-    transition: .4s; 
-    border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 0.3s ease; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
-input:checked + .slider { background-color: var(--toggle-slider-checked-bg); }
-input:checked + .slider:before { transform: translateX(20px); }
+.toggle-switch input:checked + .slider:before { transform: translateX(20px); }
         
-#themeToggleBtn { 
-    color: var(--theme-toggle-icon-color);
-    padding: 0.625rem; /* 10px */
-    border-radius: 0.5rem; /* 8px */
-}
-#themeToggleBtn:hover { 
-    background-color: var(--theme-toggle-hover-bg); 
-}
-#themeToggleBtn svg {
-    transition: color 0.2s ease-in-out;
-}
-
 .action-btn { 
-    font-weight: 600; 
-    padding-top: 0.875rem; 
-    padding-bottom: 0.875rem;
-    border-radius: 0.625rem; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    font-weight: 500; 
+    padding: 0.875rem 1.5rem; 
+    border-radius: 10px; 
+    transition: background-color 0.2s ease, transform 0.15s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.2s ease;
+    letter-spacing: 0.01em;
+    border: none; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.action-btn:hover:not(:disabled) { /* Ensure hover effects don't apply when disabled */
-    transform: translateY(-1px); 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.07);
+.action-btn:hover:not(:disabled) {
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+html.dark .action-btn:hover:not(:disabled) {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 .action-btn:active:not(:disabled) {
     transform: translateY(0px); 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+}
+html.dark .action-btn:active:not(:disabled) {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
 .action-btn:disabled { 
-    opacity: 0.6; 
+    opacity: 0.5; 
     cursor: not-allowed;
     transform: translateY(0px);
     box-shadow: none;
 }
 
-.calculate-btn {
-    background-color: var(--btn-primary-bg); 
-    color: var(--btn-primary-text);
+.app-footer p {
+    letter-spacing: -0.005em;
 }
-.calculate-btn:hover:not(:disabled) { background-color: var(--btn-primary-hover-bg); }
 
-.percentage-convert-btn {
-    background-color: var(--btn-secondary-bg); 
-    color: var(--btn-secondary-text);
+/* Styles for the dynamically inserted Clear All button */
+.clear-all-dynamic-btn {
+    padding: 0.625rem 1.25rem !important; /* Ensure smaller padding, !important if needed */
+    font-size: 0.875rem !important;     /* Smaller font */
+    width: fit-content !important;      /* Make it only as wide as its content + padding */
+    margin-top: 0.5rem; /* Add some top margin */
 }
-.percentage-convert-btn:hover:not(:disabled) { background-color: var(--btn-secondary-hover-bg); }
+
+/* On 1-column layout, center it */
+@media (max-width: 767.98px) {
+    .semesters-grid > .clear-all-dynamic-btn { 
+        justify-self: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* On 2-column layout, it will be on a new line, first column */
+@media (min-width: 768px) and (max-width: 1279.98px) {
+    .semesters-grid > .clear-all-dynamic-btn {
+        grid-column: 1 / span 2; /* Span both columns to center it */
+        justify-self: center; 
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* On 3-column layout, it will be in the 3rd column, same row as Sem 7 and Sem 8 */
+@media (min-width: 1280px) {
+    .semesters-grid > .clear-all-dynamic-btn {
+        justify-self: end; /* Align to the end (right) of its grid cell (3rd column) */
+        align-self: end;  /* Vertically align it to the bottom of the row with Sem 8 */
+        margin-top: 0; 
+        margin-right: 0; /* Align with the right edge of the grid area for the 3rd column */
+    }
+}
