@@ -45,6 +45,9 @@
     --theme-toggle-hover-bg-light: #e9e9ea;
     --tooltip-bg-light: #333333;
     --tooltip-text-light: #ffffff;
+    --social-icon-fill-light: var(--accent-color-primary);
+    --social-icon-hover-fill-light: var(--accent-color-primary-hover);
+
 
     /* Dark Theme */
     --bg-color-dark: #1c1c1e; 
@@ -87,6 +90,8 @@
     --theme-toggle-hover-bg-dark: #3a3a3c;
     --tooltip-bg-dark: #e2e2e2;
     --tooltip-text-dark: #1d1d1f;
+    --social-icon-fill-dark: var(--accent-color-primary);
+    --social-icon-hover-fill-dark: var(--accent-color-primary-hover);
 }
 
 /* Apply light theme by default */
@@ -112,7 +117,7 @@ body {
     background-color: var(--excluded-card-bg-light);
 }
 .semester-card h2 { color: var(--text-primary-light); }
-.semester-card label, .semester-card .include-label-span { color: var(--text-secondary-light); } /* target specific span */
+.semester-card label, .semester-card .include-label-span { color: var(--text-secondary-light); } 
 
 input[type="number"] {
     border: 1px solid var(--input-border-light); 
@@ -174,6 +179,14 @@ input[type="number"].input-error {
     color: var(--btn-tertiary-text-light);
 }
 .action-btn.tertiary-btn:hover:not(:disabled) { background-color: var(--btn-tertiary-hover-bg-light); }
+
+.social-icon-link .social-icon {
+    fill: var(--social-icon-fill-light);
+}
+.social-icon-link:hover .social-icon {
+    fill: var(--social-icon-hover-fill-light);
+    opacity: 0.8; /* Added subtle opacity change on hover for links */
+}
 
 
 /* Dark Theme Styles */
@@ -262,6 +275,14 @@ html.dark .action-btn.tertiary-btn {
 }
 html.dark .action-btn.tertiary-btn:hover:not(:disabled) { background-color: var(--btn-tertiary-hover-bg-dark); }
 
+html.dark .social-icon-link .social-icon {
+    fill: var(--social-icon-fill-dark);
+}
+html.dark .social-icon-link:hover .social-icon {
+    fill: var(--social-icon-hover-fill-dark);
+    opacity: 0.8; /* Added subtle opacity change on hover for links */
+}
+
 
 /* General Styles - Apple Inspired */
 body {
@@ -318,12 +339,12 @@ body {
     font-size: 0.875rem; 
 }
 .action-btn.icon-btn {
-    display: inline-flex; /* Changed from flex to inline-flex for better flow with text */
+    display: inline-flex; 
     align-items: center;
-    gap: 0.5rem; /* Space between icon and text */
+    gap: 0.5rem; 
 }
 .action-btn .btn-icon {
-    width: 1.1em; /* Relative to font size */
+    width: 1.1em; 
     height: 1.1em;
 }
 
@@ -369,10 +390,10 @@ body {
     font-weight: 500; 
     font-size: 1.125rem; 
 }
-.semester-card label, .semester-card .include-label-span { /* Target the specific span for "Include:" */
+.semester-card label, .semester-card .include-label-span { 
     font-size: 0.875rem; 
     font-weight: 400;
-    position: relative; /* For tooltip positioning */
+    position: relative; 
 }
 
 
@@ -407,9 +428,9 @@ input[type="number"]:disabled {
 .output-area .percentage-box { font-size: 1rem; font-weight: 500; }
 .output-area .error-box { font-size: 0.9375rem; font-weight: 500;} 
   
-.toggle-switch-container { /* Added for tooltip on the toggle */
+.toggle-switch-container { 
     position: relative;
-    display: inline-flex; /* or flex, depending on layout */
+    display: inline-flex; 
     align-items: center;
 }
 
@@ -437,7 +458,7 @@ input[type="number"]:disabled {
     transition: background-color 0.2s ease, transform 0.15s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.2s ease;
     letter-spacing: 0.01em;
     border: none; 
-    /* display: flex; (Moved to .icon-btn for more control) */
+    /* display: flex; Ensure icon-btn handles flex if needed */
     /* align-items: center; */
     /* justify-content: center; */
 }
@@ -469,53 +490,45 @@ html.dark .action-btn:active:not(:disabled) {
 /* Tooltip Styles */
 .has-tooltip {
     position: relative;
-    cursor: help; /* Indicate that there's help text */
+    cursor: help; 
 }
 
-.has-tooltip::after { /* Tooltip text */
+.has-tooltip::after { 
     content: attr(data-tooltip);
     position: absolute;
     background-color: var(--tooltip-bg-light);
     color: var(--tooltip-text-light);
     padding: 0.5em 0.8em;
     border-radius: 6px;
-    font-size: 0.875rem; /* 14px */
+    font-size: 0.875rem; 
     font-weight: 400;
     line-height: 1.4;
     white-space: nowrap;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     z-index: 100;
-    
-    /* Positioning */
     left: 50%;
     transform: translateX(-50%);
-    bottom: calc(100% + 8px); /* Place above the element with an 8px gap */
-    
-    /* Visibility */
+    bottom: calc(100% + 8px); 
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease, visibility 0.2s ease;
-    pointer-events: none; /* So it doesn't interfere with mouse events on the element itself */
+    pointer-events: none; 
 }
 
-.has-tooltip::before { /* Tooltip arrow */
+.has-tooltip::before { 
     content: '';
     position: absolute;
     border-width: 5px;
     border-style: solid;
-    border-color: var(--tooltip-bg-light) transparent transparent transparent; /* Arrow pointing up */
-    
-    /* Positioning */
+    border-color: var(--tooltip-bg-light) transparent transparent transparent; 
     left: 50%;
     transform: translateX(-50%);
-    bottom: calc(100% + 3px); /* Position just below the tooltip text body */
-    
-    /* Visibility */
+    bottom: calc(100% + 3px); 
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease, visibility 0.2s ease;
     pointer-events: none;
-    z-index: 101; /* Above tooltip text body */
+    z-index: 101; 
 }
 
 .has-tooltip:hover::after,
@@ -524,7 +537,6 @@ html.dark .action-btn:active:not(:disabled) {
     visibility: visible;
 }
 
-/* Dark theme tooltip adjustments */
 html.dark .has-tooltip::after {
     background-color: var(--tooltip-bg-dark);
     color: var(--tooltip-text-dark);
@@ -533,3 +545,36 @@ html.dark .has-tooltip::after {
 html.dark .has-tooltip::before {
     border-color: var(--tooltip-bg-dark) transparent transparent transparent;
 }
+
+/* Social Links in Footer */
+.made-by-container {
+    /* Uses Tailwind flex, items-center, justify-center, gap */
+}
+.social-links {
+    /* Uses Tailwind flex, items-center, gap */
+}
+.social-icon-link {
+    display: inline-block; /* Or inline-flex for better alignment if needed */
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+.social-icon-link:hover {
+    opacity: 0.75;
+    transform: scale(1.1);
+}
+.social-icon {
+    width: 1.25rem; /* 20px */
+    height: 1.25rem; /* 20px */
+    fill: var(--social-icon-fill-light); /* Default fill */
+    transition: fill 0.2s ease-in-out;
+}
+html.dark .social-icon {
+    fill: var(--social-icon-fill-dark);
+}
+/* Hover fill is handled by opacity now, but you can uncomment if you want direct fill change on hover
+.social-icon-link:hover .social-icon {
+    fill: var(--social-icon-hover-fill-light);
+}
+html.dark .social-icon-link:hover .social-icon {
+    fill: var(--social-icon-hover-fill-dark);
+}
+*/
