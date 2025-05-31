@@ -8,7 +8,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    <title>CGPA Calculator - Dynamic & Validated</title>
+    <title>CGPA Calculator - Enhanced UI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -32,9 +32,19 @@
             <p class="mt-2 text-base sm:text-lg">Your academic progress, simplified.</p>
         </header>
 
-        <div class="semester-controls mb-6 flex justify-center sm:justify-end gap-3">
-            <button id="removeSemesterBtn" class="action-btn tertiary-btn small-btn">Remove Last Semester</button>
-            <button id="addSemesterBtn" class="action-btn secondary-btn small-btn">Add Semester</button>
+        <div class="semester-controls mb-6 flex flex-wrap justify-center sm:justify-end gap-3">
+            <button id="removeSemesterBtn" class="action-btn tertiary-btn small-btn icon-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+                </svg>
+                Remove Last
+            </button>
+            <button id="addSemesterBtn" class="action-btn secondary-btn small-btn icon-btn">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                Add Semester
+            </button>
         </div>
 
         <div id="semestersContainer" class="semesters-grid">
@@ -53,7 +63,10 @@
         </div>
          <div class="mt-4">
             <button id="clearAllBtn"
-                    class="action-btn tertiary-btn w-full">
+                    class="action-btn tertiary-btn w-full icon-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                     <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                </svg>
                 Clear All Inputs
             </button>
         </div>
