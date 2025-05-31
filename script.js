@@ -1,46 +1,49 @@
 // script.js
-const semestersContainer = document.getElementById('semestersContainer');
-const calculateCgpaBtn = document.getElementById('calculateCgpaBtn');
-const convertToPercentageBtn = document.getElementById('convertToPercentageBtn');
-const clearAllBtn = document.getElementById('clearAllBtn');
-const addSemesterBtn = document.getElementById('addSemesterBtn');
-const removeSemesterBtn = document.getElementById('removeSemesterBtn');
 
-const resultArea = document.getElementById('resultArea');
-const percentageArea = document.getElementById('percentageArea');
+// Declare variables that will hold DOM elements
+let semestersContainer, calculateCgpaBtn, convertToPercentageBtn, clearAllBtn, addSemesterBtn, removeSemesterBtn;
+let resultArea, percentageArea;
+let themeToggleBtn, themeIconMoon, themeIconSun;
 
-const themeToggleBtn = document.getElementById('themeToggleBtn');
-const themeIconMoon = document.getElementById('themeIconMoon');
-const themeIconSun = document.getElementById('themeIconSun');
-
+// Declare other global variables
 let currentOverallCgpa = null; 
-let semesterCount = 0; // Will be initialized
+let semesterCount = 0; 
 const MIN_SEMESTERS = 1;
-const MAX_SEMESTERS = 12; // Or any other practical limit
+const MAX_SEMESTERS = 12; 
 
 // --- Theme Management ---
 function applyTheme(theme) {
+    if (!document.documentElement || !themeIconMoon || !themeIconSun) {
+        // Guard against null elements if called too early, though DOMContentLoaded should prevent this.
+        console.error("Theme elements not ready for applyTheme");
+        return;
+    }
     if (theme === 'dark') {
         document.documentElement.classList.add('dark');
         themeIconMoon.classList.remove('hidden'); 
         themeIconSun.classList.add('hidden');    
-    } else {
+    } else { // Light mode
         document.documentElement.classList.remove('dark');
         themeIconSun.classList.remove('hidden');  
         themeIconMoon.classList.add('hidden');   
     }
 }
+
 function initializeTheme() {
     const storedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (storedTheme) applyTheme(storedTheme);
-    else if (systemPrefersDark) applyTheme('dark');
-    else applyTheme('light');
+    if (storedTheme) {
+        applyTheme(storedTheme);
+    } else if (systemPrefersDark) {
+        applyTheme('dark');
+    } else {
+        applyTheme('light'); // Default to light
+    }
 }
-// initializeTheme(); // Moved to the end after DOM elements are potentially created by initializeSemesters
 
 // --- Input Validation & Feedback ---
 function validateField(inputElement, isCreditsField = false) {
+    if (!inputElement) return true; // Should not happen if called correctly
     const value = parseFloat(inputElement.value);
     let isValid = true;
 
@@ -52,10 +55,6 @@ function validateField(inputElement, isCreditsField = false) {
         if (isNaN(value) || value < 0 || value > 10) {
             isValid = false;
         }
-    }
-
-    if (!inputElement.value && !isCreditsField) { 
-        // isValid = false; // Uncomment if empty SGPA should show error immediately
     }
 
     if (isValid) {
@@ -81,8 +80,8 @@ function createSemesterCard(semNum) {
     card.innerHTML = `
         <div class="flex items-center justify-between mb-5">
             <h2 class="text-lg">Semester ${semNum}</h2> 
-            <div class="flex items-center">
-                <span class="text-sm mr-3">Include:</span>
+            <div class="flex items-center toggle-switch-container has-tooltip" data-tooltip="Check to include this semester in CGPA calculation">
+                <span class="text-sm mr-3 include-label-span">Include:</span>
                 <label class="toggle-switch">
                     <input type="checkbox" id="include-${semId}" checked>
                     <span class="slider"></span>
@@ -91,11 +90,11 @@ function createSemesterCard(semNum) {
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-5">
             <div>
-                <label for="sgpa-${semId}" class="block text-sm font-medium mb-2">SGPA/GPA:</label>
+                <label for="sgpa-${semId}" class="block text-sm font-medium mb-2 has-tooltip" data-tooltip="Semester Grade Point Average (0-10)">SGPA/GPA:</label>
                 <input type="number" id="sgpa-${semId}" name="sgpa-${semId}" placeholder="e.g., 8.5" step="0.01" min="0" max="10" class="w-full">
             </div>
             <div>
-                <label for="credits-${semId}" class="block text-sm font-medium mb-2">Credits:</label>
+                <label for="credits-${semId}" class="block text-sm font-medium mb-2 has-tooltip" data-tooltip="Total credits for this semester (e.g., 24)">Credits:</label>
                 <input type="number" id="credits-${semId}" name="credits-${semId}" placeholder="e.g., 24" step="1" min="0" class="w-full">
             </div>
         </div>`;
@@ -108,10 +107,10 @@ function createSemesterCard(semNum) {
     creditsInput.addEventListener('input', () => validateField(creditsInput, true));
     
     const resetDependentFieldsAndClearError = () => {
-        percentageArea.innerHTML = '';
-        convertToPercentageBtn.disabled = true;
+        if(percentageArea) percentageArea.innerHTML = '';
+        if(convertToPercentageBtn) convertToPercentageBtn.disabled = true;
         currentOverallCgpa = null;
-        if (resultArea.querySelector('.result-box') || resultArea.querySelector('.error-box')) { 
+        if (resultArea && (resultArea.querySelector('.result-box') || resultArea.querySelector('.error-box'))) { 
             resultArea.innerHTML = '';
         }
         document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
@@ -138,15 +137,15 @@ function createSemesterCard(semNum) {
 }
 
 function updateSemesterButtons() {
-    removeSemesterBtn.disabled = semesterCount <= MIN_SEMESTERS;
-    addSemesterBtn.disabled = semesterCount >= MAX_SEMESTERS;
+    if(removeSemesterBtn) removeSemesterBtn.disabled = semesterCount <= MIN_SEMESTERS;
+    if(addSemesterBtn) addSemesterBtn.disabled = semesterCount >= MAX_SEMESTERS;
 }
 
 function addSemester() {
     if (semesterCount < MAX_SEMESTERS) {
         semesterCount++;
         const newCard = createSemesterCard(semesterCount);
-        semestersContainer.appendChild(newCard);
+        if(semestersContainer) semestersContainer.appendChild(newCard);
         updateSemesterButtons();
         clearResultsAndErrors(); 
     }
@@ -155,7 +154,7 @@ function addSemester() {
 function removeLastSemester() {
     if (semesterCount > MIN_SEMESTERS) {
         const lastSemCard = document.getElementById(`card-sem${semesterCount}`);
-        if (lastSemCard) {
+        if (lastSemCard && semestersContainer) {
             semestersContainer.removeChild(lastSemCard);
         }
         semesterCount--;
@@ -165,6 +164,7 @@ function removeLastSemester() {
 }
 
 function initializeSemesters(count) { 
+    if(!semestersContainer) return;
     semestersContainer.innerHTML = ''; 
     semesterCount = 0; 
     let initialCount = count;
@@ -172,12 +172,11 @@ function initializeSemesters(count) {
     if (initialCount > MAX_SEMESTERS) initialCount = MAX_SEMESTERS;
 
     for (let i = 1; i <= initialCount; i++) {
-        // Directly increment semesterCount and create card, as addSemester also calls updateSemesterButtons
         semesterCount++; 
         const newCard = createSemesterCard(semesterCount);
         semestersContainer.appendChild(newCard);
     }
-    updateSemesterButtons(); // Call once after all initial cards are added
+    updateSemesterButtons(); 
 }
 
 
@@ -212,35 +211,30 @@ function clearAllInputs() {
 }
 
 function clearResultsAndErrors(){
-    resultArea.innerHTML = '';
-    percentageArea.innerHTML = '';
-    convertToPercentageBtn.disabled = true;
+    if(resultArea) resultArea.innerHTML = '';
+    if(percentageArea) percentageArea.innerHTML = '';
+    if(convertToPercentageBtn) convertToPercentageBtn.disabled = true;
     currentOverallCgpa = null;
     document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
 }
 
-clearAllBtn.addEventListener('click', clearAllInputs);
-addSemesterBtn.addEventListener('click', addSemester);
-removeSemesterBtn.addEventListener('click', removeLastSemester);
-
-
 // --- CGPA Calculation ---
-calculateCgpaBtn.addEventListener('click', () => {
+function calculateCgpa() {
     document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
     
     let totalWeightedSgpa = 0;
     let totalCredits = 0;
     let hasError = false;
-    resultArea.innerHTML = ''; 
-    percentageArea.innerHTML = ''; 
-    convertToPercentageBtn.disabled = true; 
+    if(resultArea) resultArea.innerHTML = ''; 
+    if(percentageArea) percentageArea.innerHTML = ''; 
+    if(convertToPercentageBtn) convertToPercentageBtn.disabled = true; 
     currentOverallCgpa = null;
 
     for (let i = 1; i <= semesterCount; i++) { 
         const semId = `sem${i}`;
         const includeCheckbox = document.getElementById(`include-${semId}`);
-        const sgpaInput = document.getElementById(`sgpa-${semId}`);
-        const creditsInput = document.getElementById(`credits-${semId}`);
+        const sgpaInput = document.getElementById(`sgpa-sem${i}`);
+        const creditsInput = document.getElementById(`credits-sem${i}`);
 
         if (includeCheckbox && includeCheckbox.checked) {
             const sgpa = parseFloat(sgpaInput.value);
@@ -305,7 +299,7 @@ calculateCgpaBtn.addEventListener('click', () => {
          else { 
              displayResult("Overall CGPA is: 0.00 (Total credits are zero)");
              currentOverallCgpa = 0.00; 
-             convertToPercentageBtn.disabled = false; 
+             if(convertToPercentageBtn) convertToPercentageBtn.disabled = false; 
         }
         return;
     }
@@ -313,34 +307,64 @@ calculateCgpaBtn.addEventListener('click', () => {
     const overallCgpa = totalWeightedSgpa / totalCredits;
     displayResult(`Your Overall CGPA is: ${overallCgpa.toFixed(2)}`);
     currentOverallCgpa = overallCgpa; 
-    convertToPercentageBtn.disabled = false; 
-});
+    if(convertToPercentageBtn) convertToPercentageBtn.disabled = false; 
+}
 
 // --- Convert to Percentage ---
-convertToPercentageBtn.addEventListener('click', () => {
+function convertToPercentage() {
     if (currentOverallCgpa === null) {
-        percentageArea.innerHTML = `<div class="error-box">Please calculate CGPA first.</div>`;
+        if(percentageArea) percentageArea.innerHTML = `<div class="error-box">Please calculate CGPA first.</div>`;
         return;
     }
     const numericCgpa = parseFloat(currentOverallCgpa);
     if (isNaN(numericCgpa)) {
-         percentageArea.innerHTML = `<div class="error-box">Invalid CGPA value for percentage conversion.</div>`;
+         if(percentageArea) percentageArea.innerHTML = `<div class="error-box">Invalid CGPA value for percentage conversion.</div>`;
          return;
     }
     const percentage = numericCgpa * 9.5;
-    percentageArea.innerHTML = `<div class="percentage-box">Equivalent Percentage: ${percentage.toFixed(2)}%</div>`;
-});
+    if(percentageArea) percentageArea.innerHTML = `<div class="percentage-box">Equivalent Percentage: ${percentage.toFixed(2)}%</div>`;
+}
 
 
 function displayError(message) {
-    resultArea.innerHTML = `<div class="error-box">${message}</div>`;
-    percentageArea.innerHTML = ''; 
-    convertToPercentageBtn.disabled = true;
+    if(resultArea) resultArea.innerHTML = `<div class="error-box">${message}</div>`;
+    if(percentageArea) percentageArea.innerHTML = ''; 
+    if(convertToPercentageBtn) convertToPercentageBtn.disabled = true;
 }
 function displayResult(message) {
-    resultArea.innerHTML = `<div class="result-box">${message}</div>`;
+    if(resultArea) resultArea.innerHTML = `<div class="result-box">${message}</div>`;
 }
 
-// Initialize
-initializeSemesters(8); // <<-- CHANGED THIS LINE FROM 2 to 8
-initializeTheme(); 
+// --- Event Listeners and Initializations ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Assign DOM elements
+    semestersContainer = document.getElementById('semestersContainer');
+    calculateCgpaBtn = document.getElementById('calculateCgpaBtn');
+    convertToPercentageBtn = document.getElementById('convertToPercentageBtn');
+    clearAllBtn = document.getElementById('clearAllBtn');
+    addSemesterBtn = document.getElementById('addSemesterBtn');
+    removeSemesterBtn = document.getElementById('removeSemesterBtn');
+    resultArea = document.getElementById('resultArea');
+    percentageArea = document.getElementById('percentageArea');
+    themeToggleBtn = document.getElementById('themeToggleBtn');
+    themeIconMoon = document.getElementById('themeIconMoon');
+    themeIconSun = document.getElementById('themeIconSun');
+
+    // Add event listeners (check if elements exist before adding)
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            let newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+    if (clearAllBtn) clearAllBtn.addEventListener('click', clearAllInputs);
+    if (addSemesterBtn) addSemesterBtn.addEventListener('click', addSemester);
+    if (removeSemesterBtn) removeSemesterBtn.addEventListener('click', removeLastSemester);
+    if (calculateCgpaBtn) calculateCgpaBtn.addEventListener('click', calculateCgpa);
+    if (convertToPercentageBtn) convertToPercentageBtn.addEventListener('click', convertToPercentage);
+    
+    // Initializations
+    initializeTheme(); 
+    initializeSemesters(8); 
+});
