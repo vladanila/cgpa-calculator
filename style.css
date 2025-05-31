@@ -43,6 +43,8 @@
     --shadow-color-light: rgba(0, 0, 0, 0.08); 
     --theme-toggle-icon-color-light: var(--text-secondary-light);
     --theme-toggle-hover-bg-light: #e9e9ea;
+    --tooltip-bg-light: #333333;
+    --tooltip-text-light: #ffffff;
 
     /* Dark Theme */
     --bg-color-dark: #1c1c1e; 
@@ -83,6 +85,8 @@
     --shadow-color-dark: rgba(0, 0, 0, 0.25); 
     --theme-toggle-icon-color-dark: var(--text-secondary-dark);
     --theme-toggle-hover-bg-dark: #3a3a3c;
+    --tooltip-bg-dark: #e2e2e2;
+    --tooltip-text-dark: #1d1d1f;
 }
 
 /* Apply light theme by default */
@@ -108,7 +112,7 @@ body {
     background-color: var(--excluded-card-bg-light);
 }
 .semester-card h2 { color: var(--text-primary-light); }
-.semester-card label, .semester-card span { color: var(--text-secondary-light); }
+.semester-card label, .semester-card .include-label-span { color: var(--text-secondary-light); } /* target specific span */
 
 input[type="number"] {
     border: 1px solid var(--input-border-light); 
@@ -124,10 +128,9 @@ input[type="number"]:disabled {
     background-color: var(--input-disabled-bg-light); 
     opacity: 0.7;
 }
-/* Visual Validation Error Style */
 input[type="number"].input-error {
-    border-color: var(--error-border-light) !important; /* Use error color from theme */
-    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.2) !important; /* Softer red ring for error */
+    border-color: var(--error-border-light) !important; 
+    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.2) !important; 
 }
 
 
@@ -197,7 +200,7 @@ html.dark .semester-card.excluded {
     background-color: var(--excluded-card-bg-dark);
 }
 html.dark .semester-card h2 { color: var(--text-primary-dark); }
-html.dark .semester-card label, html.dark .semester-card span { color: var(--text-secondary-dark); }
+html.dark .semester-card label, html.dark .semester-card .include-label-span { color: var(--text-secondary-dark); }
 
 html.dark input[type="number"] {
     border: 1px solid var(--input-border-dark); 
@@ -212,7 +215,6 @@ html.dark input[type="number"]:focus {
 html.dark input[type="number"]:disabled { 
     background-color: var(--input-disabled-bg-dark); 
 }
-/* Visual Validation Error Style for Dark Mode */
 html.dark input[type="number"].input-error {
     border-color: var(--error-border-dark) !important; 
     box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.3) !important;
@@ -312,8 +314,17 @@ body {
     /* Using flex classes from Tailwind in HTML */
 }
 .action-btn.small-btn {
-    padding: 0.5rem 1rem; /* Smaller padding */
-    font-size: 0.875rem; /* Smaller font size */
+    padding: 0.5rem 1rem; 
+    font-size: 0.875rem; 
+}
+.action-btn.icon-btn {
+    display: inline-flex; /* Changed from flex to inline-flex for better flow with text */
+    align-items: center;
+    gap: 0.5rem; /* Space between icon and text */
+}
+.action-btn .btn-icon {
+    width: 1.1em; /* Relative to font size */
+    height: 1.1em;
 }
 
 
@@ -358,12 +369,10 @@ body {
     font-weight: 500; 
     font-size: 1.125rem; 
 }
-.semester-card label {
+.semester-card label, .semester-card .include-label-span { /* Target the specific span for "Include:" */
     font-size: 0.875rem; 
     font-weight: 400;
-}
-.semester-card span { 
-    font-size: 0.875rem; 
+    position: relative; /* For tooltip positioning */
 }
 
 
@@ -398,6 +407,12 @@ input[type="number"]:disabled {
 .output-area .percentage-box { font-size: 1rem; font-weight: 500; }
 .output-area .error-box { font-size: 0.9375rem; font-weight: 500;} 
   
+.toggle-switch-container { /* Added for tooltip on the toggle */
+    position: relative;
+    display: inline-flex; /* or flex, depending on layout */
+    align-items: center;
+}
+
 .toggle-switch { 
     position: relative; 
     display: inline-block; 
@@ -422,9 +437,9 @@ input[type="number"]:disabled {
     transition: background-color 0.2s ease, transform 0.15s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.2s ease;
     letter-spacing: 0.01em;
     border: none; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* display: flex; (Moved to .icon-btn for more control) */
+    /* align-items: center; */
+    /* justify-content: center; */
 }
 .action-btn:hover:not(:disabled) {
     transform: translateY(-2px); 
@@ -449,4 +464,72 @@ html.dark .action-btn:active:not(:disabled) {
 
 .app-footer p {
     letter-spacing: -0.005em;
+}
+
+/* Tooltip Styles */
+.has-tooltip {
+    position: relative;
+    cursor: help; /* Indicate that there's help text */
+}
+
+.has-tooltip::after { /* Tooltip text */
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: var(--tooltip-bg-light);
+    color: var(--tooltip-text-light);
+    padding: 0.5em 0.8em;
+    border-radius: 6px;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 400;
+    line-height: 1.4;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100;
+    
+    /* Positioning */
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(100% + 8px); /* Place above the element with an 8px gap */
+    
+    /* Visibility */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none; /* So it doesn't interfere with mouse events on the element itself */
+}
+
+.has-tooltip::before { /* Tooltip arrow */
+    content: '';
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--tooltip-bg-light) transparent transparent transparent; /* Arrow pointing up */
+    
+    /* Positioning */
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(100% + 3px); /* Position just below the tooltip text body */
+    
+    /* Visibility */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    z-index: 101; /* Above tooltip text body */
+}
+
+.has-tooltip:hover::after,
+.has-tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dark theme tooltip adjustments */
+html.dark .has-tooltip::after {
+    background-color: var(--tooltip-bg-dark);
+    color: var(--tooltip-text-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+html.dark .has-tooltip::before {
+    border-color: var(--tooltip-bg-dark) transparent transparent transparent;
 }
